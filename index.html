@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Prove — Customer Story Switcher</title>
+    <link rel="stylesheet" href="prove-case-studies.css" />
+    <style>
+      /* Demo page chrome only — not part of the component. */
+      body {
+        margin: 0;
+        font-family: "Poppins", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Helvetica, Arial, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ======================================================================
+         COMPONENT
+         In Webflow, everything from .cs-list down to </div> for .cs-item is
+         the Collection List. See README.md for the field mapping.
+         ====================================================================== -->
+    <section class="cs" data-cs data-cs-initial="0">
+      <div class="cs-container">
+        <!-- Desktop tab strip. Leave it EMPTY — the JS moves the logo
+             triggers in here above 992px. -->
+        <div class="cs-tabbar" data-cs-tabbar aria-hidden="true"></div>
+
+        <!-- Collection List Wrapper -->
+        <div class="cs-list" data-cs-list>
+          <!-- ============ Collection Item ============ -->
+          <div class="cs-item" data-cs-item>
+            <!-- Trigger: logo (+ chevron on mobile) -->
+            <button class="cs-trigger" type="button" data-cs-trigger>
+              <span class="cs-logo-wrap">
+                <svg class="cs-logo" viewBox="0 0 108 32" role="img" aria-label="Gusto">
+                  <text x="0" y="25" font-family="inherit" font-size="27" font-weight="700" fill="#101820">gusto</text>
+                </svg>
+              </span>
+              <svg class="cs-chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 9.5 12 15.5 18 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+
+            <!-- Panel -->
+            <div class="cs-panel" data-cs-panel>
+              <div class="cs-panel-inner">
+                <div class="cs-content">
+                  <blockquote class="cs-quote">
+                    "With Prove, we replaced a slow, high-friction photo ID process with a
+                    seamless experience that made account recovery 10x faster while reducing
+                    support cases and strengthening security. More importantly, it allowed us
+                    to build trust with our customers in the moments when they need us most."
+                  </blockquote>
+
+                  <div class="cs-name">Senthil Sivasubramanian</div>
+                  <div class="cs-role">Engineering Leader, Gusto</div>
+
+                  <ul class="cs-stats">
+                    <li class="cs-stat">
+                      <div class="cs-stat-value">90%</div>
+                      <div class="cs-stat-label">faster account recovery</div>
+                    </li>
+                    <li class="cs-stat">
+                      <div class="cs-stat-value">70%</div>
+                      <div class="cs-stat-label">drop in account recovery-related support cases</div>
+                    </li>
+                    <li class="cs-stat">
+                      <div class="cs-stat-value">0</div>
+                      <div class="cs-stat-label">ATOs in Prove-verified sessions</div>
+                    </li>
+                  </ul>
+
+                  <a class="cs-cta" href="/customers/gusto">
+                    Read the Story
+                    <svg class="cs-cta-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </a>
+                </div>
+
+                <div class="cs-media">
+                  <img class="cs-image" src="images/gusto.svg" alt="A Gusto customer working on a laptop in a cafe" loading="lazy" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ============ /Collection Item ============ -->
+
+          <!-- Collection Item -->
+          <div class="cs-item" data-cs-item>
+            <button class="cs-trigger" type="button" data-cs-trigger>
+              <span class="cs-logo-wrap">
+                <svg class="cs-logo" viewBox="0 0 150 32" role="img" aria-label="Mastercard">
+                  <circle cx="14" cy="16" r="12" fill="#8b8fc4" />
+                  <circle cx="30" cy="16" r="12" fill="#a2a6d6" />
+                  <text x="48" y="23" font-family="inherit" font-size="19" fill="#8b8fc4">mastercard</text>
+                </svg>
+              </span>
+              <svg class="cs-chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 9.5 12 15.5 18 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+
+            <div class="cs-panel" data-cs-panel>
+              <div class="cs-panel-inner">
+                <div class="cs-content">
+                  <blockquote class="cs-quote">
+                    "Prove gave us a way to verify identity in seconds without asking people to
+                    photograph a document. Onboarding completion went up and our fraud teams
+                    got quieter at the same time."
+                  </blockquote>
+
+                  <div class="cs-name">Placeholder Name</div>
+                  <div class="cs-role">Placeholder Title, Mastercard</div>
+
+                  <ul class="cs-stats">
+                    <li class="cs-stat">
+                      <div class="cs-stat-value">3x</div>
+                      <div class="cs-stat-label">faster onboarding</div>
+                    </li>
+                    <li class="cs-stat">
+                      <div class="cs-stat-value">45%</div>
+                      <div class="cs-stat-label">fewer abandoned applications</div>
+                    </li>
+                    <li class="cs-stat">
+                      <div class="cs-stat-value">99%</div>
+                      <div class="cs-stat-label">pass rate on first attempt</div>
+                    </li>
+                  </ul>
+
+                  <a class="cs-cta" href="/customers/mastercard">
+                    Read the Story
+                    <svg class="cs-cta-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </a>
+                </div>
+
+                <div class="cs-media">
+                  <img class="cs-image" src="images/mastercard.svg" alt="Paying with a card at a point-of-sale terminal" loading="lazy" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Collection Item -->
+          <div class="cs-item" data-cs-item>
+            <button class="cs-trigger" type="button" data-cs-trigger>
+              <span class="cs-logo-wrap">
+                <svg class="cs-logo" viewBox="0 0 90 32" role="img" aria-label="Uber">
+                  <text x="0" y="25" font-family="inherit" font-size="27" font-weight="600" fill="#9498c9">Uber</text>
+                </svg>
+              </span>
+              <svg class="cs-chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 9.5 12 15.5 18 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+
+            <div class="cs-panel" data-cs-panel>
+              <div class="cs-panel-inner">
+                <div class="cs-content">
+                  <blockquote class="cs-quote">
+                    "Drivers and riders expect to be recognised instantly. Prove let us
+                    authenticate a phone number in the background instead of interrupting the
+                    trip with a one-time passcode."
+                  </blockquote>
+
+                  <div class="cs-name">Placeholder Name</div>
+                  <div class="cs-role">Placeholder Title, Uber</div>
+
+                  <ul class="cs-stats">
+                    <li class="cs-stat">
+                      <div class="cs-stat-value">80%</div>
+                      <div class="cs-stat-label">fewer OTP prompts</div>
+                    </li>
+                    <li class="cs-stat">
+                      <div class="cs-stat-value">2s</div>
+                      <div class="cs-stat-label">median verification time</div>
+                    </li>
+                    <li class="cs-stat">
+                      <div class="cs-stat-value">60%</div>
+                      <div class="cs-stat-label">reduction in SIM-swap fraud</div>
+                    </li>
+                  </ul>
+
+                  <a class="cs-cta" href="/customers/uber">
+                    Read the Story
+                    <svg class="cs-cta-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </a>
+                </div>
+
+                <div class="cs-media">
+                  <img class="cs-image" src="images/uber.svg" alt="Uber vehicles waiting in city traffic" loading="lazy" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Collection Item -->
+          <div class="cs-item" data-cs-item>
+            <button class="cs-trigger" type="button" data-cs-trigger>
+              <span class="cs-logo-wrap">
+                <svg class="cs-logo" viewBox="0 0 140 32" role="img" aria-label="Synchrony">
+                  <rect x="0" y="12" width="4" height="13" fill="#8b8fc4" />
+                  <rect x="7" y="7" width="4" height="18" fill="#8b8fc4" />
+                  <rect x="14" y="16" width="4" height="9" fill="#8b8fc4" />
+                  <text x="24" y="24" font-family="inherit" font-size="20" fill="#8b8fc4">synchrony</text>
+                </svg>
+              </span>
+              <svg class="cs-chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 9.5 12 15.5 18 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+
+            <div class="cs-panel" data-cs-panel>
+              <div class="cs-panel-inner">
+                <div class="cs-content">
+                  <blockquote class="cs-quote">
+                    "Applying for credit used to mean a form and a wait. With Prove we
+                    pre-fill verified data from the phone number and approve in the same
+                    session."
+                  </blockquote>
+
+                  <div class="cs-name">Placeholder Name</div>
+                  <div class="cs-role">Placeholder Title, Synchrony</div>
+
+                  <ul class="cs-stats">
+                    <li class="cs-stat">
+                      <div class="cs-stat-value">35%</div>
+                      <div class="cs-stat-label">lift in application completion</div>
+                    </li>
+                    <li class="cs-stat">
+                      <div class="cs-stat-value">12s</div>
+                      <div class="cs-stat-label">saved per application</div>
+                    </li>
+                    <li class="cs-stat">
+                      <div class="cs-stat-value">50%</div>
+                      <div class="cs-stat-label">fewer manual reviews</div>
+                    </li>
+                  </ul>
+
+                  <a class="cs-cta" href="/customers/synchrony">
+                    Read the Story
+                    <svg class="cs-cta-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </a>
+                </div>
+
+                <div class="cs-media">
+                  <img class="cs-image" src="images/synchrony.svg" alt="A credit card resting in a leather wallet" loading="lazy" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Collection Item -->
+          <div class="cs-item" data-cs-item>
+            <button class="cs-trigger" type="button" data-cs-trigger>
+              <span class="cs-logo-wrap">
+                <svg class="cs-logo" viewBox="0 0 80 32" role="img" aria-label="Zelle">
+                  <text x="0" y="25" font-family="inherit" font-size="26" font-weight="600" fill="#8b8fc4">Żelle</text>
+                </svg>
+              </span>
+              <svg class="cs-chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 9.5 12 15.5 18 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+
+            <div class="cs-panel" data-cs-panel>
+              <div class="cs-panel-inner">
+                <div class="cs-content">
+                  <blockquote class="cs-quote">
+                    "Payments are irreversible, so trust has to be established before the
+                    money moves. Prove verifies both sides of the transfer without adding a
+                    single extra tap."
+                  </blockquote>
+
+                  <div class="cs-name">Placeholder Name</div>
+                  <div class="cs-role">Placeholder Title, Zelle</div>
+
+                  <ul class="cs-stats">
+                    <li class="cs-stat">
+                      <div class="cs-stat-value">65%</div>
+                      <div class="cs-stat-label">drop in scam-related disputes</div>
+                    </li>
+                    <li class="cs-stat">
+                      <div class="cs-stat-value">4x</div>
+                      <div class="cs-stat-label">faster enrolment</div>
+                    </li>
+                    <li class="cs-stat">
+                      <div class="cs-stat-value">0</div>
+                      <div class="cs-stat-label">added steps for the sender</div>
+                    </li>
+                  </ul>
+
+                  <a class="cs-cta" href="/customers/zelle">
+                    Read the Story
+                    <svg class="cs-cta-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </a>
+                </div>
+
+                <div class="cs-media">
+                  <img class="cs-image" src="images/zelle.svg" alt="Sending a payment from a mobile phone" loading="lazy" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /Collection List Wrapper -->
+      </div>
+    </section>
+    <!-- ====================================================================== -->
+
+    <script src="prove-case-studies.js"></script>
+  </body>
+</html>

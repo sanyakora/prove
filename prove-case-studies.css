@@ -1,0 +1,485 @@
+/* ==========================================================================
+   Prove — Customer Story Switcher
+   Desktop: logo tabs + two-column story panel
+   Mobile:  logo accordion (single open)
+
+   Breakpoint note: the media queries below use 991px / 992px. If you change
+   them, change CS_BREAKPOINT in prove-case-studies.js to match.
+   ========================================================================== */
+
+.cs {
+  /* ---- Theme tokens: override these to match the live brand ---- */
+  --cs-accent: #7b4ee8;
+  --cs-accent-soft: #ede7fd;
+  --cs-bg: #f7f5fe;
+  --cs-text: #150a2e;
+  --cs-muted: #2c2440;
+  --cs-rule: #e2dcf5;
+  --cs-cta-bg: #000000;
+  --cs-cta-text: #ffffff;
+
+  --cs-max: 1360px;
+  --cs-pad: 40px;
+  --cs-radius: 20px;
+  --cs-col-gap: 80px;
+  --cs-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Inherits the site's font by default — no font-family is forced. */
+  box-sizing: border-box;
+  padding: 56px 0 72px;
+  background: var(--cs-bg);
+  color: var(--cs-text);
+  font-family: inherit;
+  -webkit-font-smoothing: antialiased;
+}
+
+.cs *,
+.cs *::before,
+.cs *::after {
+  box-sizing: border-box;
+}
+
+.cs-container {
+  max-width: var(--cs-max);
+  margin: 0 auto;
+  padding: 0 var(--cs-pad);
+}
+
+/* --------------------------------------------------------------------------
+   Tab bar (desktop only — triggers are moved in here by JS)
+   -------------------------------------------------------------------------- */
+
+.cs-tabbar {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Trigger (logo). Lives inside the item on mobile, inside .cs-tabbar on
+   desktop. Styles are scoped by parent so one markup node serves both.
+   -------------------------------------------------------------------------- */
+
+.cs-trigger {
+  appearance: none;
+  -webkit-appearance: none;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  margin: 0;
+  padding: 22px 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.cs-trigger:focus-visible {
+  outline: 2px solid var(--cs-accent);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.cs-logo-wrap {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.cs-logo {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: 26px;
+  object-fit: contain;
+  object-position: left center;
+  filter: grayscale(1);
+  opacity: 0.5;
+  transition: opacity 0.25s var(--cs-ease), filter 0.25s var(--cs-ease);
+}
+
+.cs-item.is-active .cs-logo,
+.cs-trigger.is-active .cs-logo {
+  filter: none;
+  opacity: 1;
+}
+
+.cs-trigger:hover .cs-logo {
+  opacity: 0.8;
+}
+
+.cs-item.is-active .cs-trigger:hover .cs-logo,
+.cs-trigger.is-active:hover .cs-logo {
+  opacity: 1;
+}
+
+/* Chevron — mobile affordance only */
+.cs-chevron {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  color: #6d6a86;
+  transition: transform 0.3s var(--cs-ease), color 0.25s var(--cs-ease);
+}
+
+.cs-item.is-active .cs-chevron {
+  transform: rotate(180deg);
+  color: var(--cs-text);
+}
+
+/* --------------------------------------------------------------------------
+   Items + panels
+   -------------------------------------------------------------------------- */
+
+.cs-list {
+  display: block;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cs-item {
+  position: relative;
+  border-top: 1px solid var(--cs-rule);
+}
+
+.cs-item:first-child {
+  border-top: 0;
+}
+
+/* Purple rule above the open item on mobile */
+.cs-item::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--cs-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s var(--cs-ease);
+}
+
+.cs-item.is-active::before {
+  transform: scaleX(1);
+}
+
+.cs-panel {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.45s var(--cs-ease), opacity 0.3s var(--cs-ease);
+}
+
+.cs-item.is-active > .cs-panel {
+  opacity: 1;
+}
+
+.cs-panel-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 4px 0 36px;
+}
+
+.cs-content {
+  min-width: 0;
+}
+
+/* ---- Quote ---- */
+
+.cs-quote {
+  margin: 0 0 24px;
+  padding: 0;
+  border: 0;
+  font-size: clamp(1.25rem, 1.05rem + 1vw, 1.75rem);
+  line-height: 1.34;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--cs-text);
+}
+
+/* ---- Attribution ---- */
+
+.cs-name {
+  margin: 0 0 4px;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--cs-accent);
+}
+
+.cs-role {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--cs-muted);
+}
+
+/* ---- Stats ---- */
+
+.cs-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cs-stat-value {
+  font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--cs-accent);
+}
+
+.cs-stat-label {
+  margin-top: 8px;
+  font-size: 0.875rem;
+  line-height: 1.35;
+  color: var(--cs-muted);
+}
+
+/* ---- CTA ---- */
+
+.cs-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 32px;
+  padding: 16px 28px;
+  border-radius: 999px;
+  background: var(--cs-cta-bg);
+  color: var(--cs-cta-text);
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s var(--cs-ease), opacity 0.2s var(--cs-ease);
+}
+
+.cs-cta:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+  color: var(--cs-cta-text);
+}
+
+.cs-cta:focus-visible {
+  outline: 2px solid var(--cs-accent);
+  outline-offset: 3px;
+}
+
+.cs-cta-arrow {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+}
+
+/* ---- Media ---- */
+
+.cs-media {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--cs-radius);
+  background: linear-gradient(135deg, var(--cs-accent-soft), #dcd3fb);
+  aspect-ratio: 1 / 1;
+}
+
+.cs-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Set by JS when a CMS image field is empty */
+.cs-media.cs-is-empty .cs-image {
+  display: none;
+}
+
+/* Hidden by JS when the matching CMS field is empty */
+.cs-hidden {
+  display: none !important;
+}
+
+/* Pre-init (JS not parsed yet / JS disabled): show the first story open so
+   the section is never a strip of logos with an empty space under it.
+   JS stamps data-cs-ready on the list, which switches these off. */
+.cs-list:not([data-cs-ready]) > .cs-item:first-child > .cs-panel {
+  max-height: none;
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Desktop
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 992px) {
+  .cs {
+    padding: 72px 0 96px;
+  }
+
+  .cs-tabbar {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    border-bottom: 1px solid var(--cs-rule);
+  }
+
+  .cs-tabbar .cs-trigger {
+    position: relative;
+    flex: 1 1 0;
+    width: auto;
+    justify-content: center;
+    padding: 8px 12px 24px;
+    gap: 0;
+  }
+
+  .cs-tabbar .cs-trigger:first-child {
+    justify-content: flex-start;
+    padding-left: 0;
+  }
+
+  .cs-tabbar .cs-trigger:last-child {
+    justify-content: flex-end;
+    padding-right: 0;
+  }
+
+  .cs-tabbar .cs-logo-wrap {
+    flex: 0 0 auto;
+  }
+
+  .cs-tabbar .cs-logo {
+    height: 30px;
+    object-position: center;
+  }
+
+  /* Active underline sits on top of the bar's own rule */
+  .cs-tabbar .cs-trigger::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: -1px;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--cs-accent);
+    transform: scaleX(0.4);
+    opacity: 0;
+    transition: transform 0.3s var(--cs-ease), opacity 0.3s var(--cs-ease);
+  }
+
+  .cs-tabbar .cs-trigger:first-child::after {
+    left: 0;
+  }
+
+  .cs-tabbar .cs-trigger:last-child::after {
+    right: 0;
+  }
+
+  .cs-tabbar .cs-trigger.is-active::after {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+
+  /* The chevron is an accordion affordance — no place in a tab bar */
+  .cs-tabbar .cs-chevron {
+    display: none;
+  }
+
+  /* Items become plain panel wrappers */
+  .cs-item {
+    border-top: 0;
+  }
+
+  .cs-item::before {
+    display: none;
+  }
+
+  .cs-panel {
+    display: none;
+    max-height: none;
+    overflow: visible;
+    opacity: 1;
+    transition: none;
+  }
+
+  .cs-item.is-active > .cs-panel,
+  .cs-list:not([data-cs-ready]) > .cs-item:first-child > .cs-panel {
+    display: block;
+  }
+
+  .cs-panel-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr);
+    align-items: start;
+    gap: var(--cs-col-gap);
+    padding: 64px 0 0;
+    animation: cs-panel-in 0.45s var(--cs-ease) both;
+  }
+
+  .cs-quote {
+    margin-bottom: 32px;
+    font-size: clamp(1.5rem, 1.05rem + 0.85vw, 2rem);
+  }
+
+  .cs-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+    max-width: 620px;
+    margin-top: 36px;
+  }
+
+  .cs-media {
+    aspect-ratio: 1 / 1.02;
+  }
+}
+
+@keyframes cs-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Mobile refinements
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 991px) {
+  .cs {
+    --cs-pad: 20px;
+  }
+
+  .cs-stats {
+    gap: 14px;
+  }
+
+  .cs-stat-label {
+    font-size: 0.8125rem;
+  }
+
+  .cs-cta {
+    margin-top: 28px;
+    padding: 14px 24px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .cs *,
+  .cs *::before,
+  .cs *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
