@@ -1,0 +1,541 @@
+/* ==========================================================================
+   Prove — Customer Story Switcher
+   CSS OVERRIDE for the existing Webflow build (two Collection Lists).
+
+   Desktop (>= 992px): .tab-nav is a logo tab strip, one .tab-pane visible.
+   Mobile  (< 992px):  each .tab-btn is moved next to its .tab-pane by the
+                       companion JS, and the panes become an accordion.
+
+   ---------------------------------------------------------------------------
+   SCOPE: every rule is prefixed with `.section-4`, the class on your section.
+   That prefix is what lets these rules beat Webflow's own single-class styles
+   no matter which stylesheet loads first. If you rename the section class in
+   the Designer, find-and-replace `.section-4` in this file and in
+   webflow-override.js (SCOPE).
+
+   Stat values/labels are targeted structurally (`.metric-item h3` / `p`)
+   rather than by `.heading-2` / `.paragraph-3`, so renaming or regenerating
+   those auto-classes will not break the styling.
+
+   BREAKPOINT: the 991/992px queries below must match CS_BREAKPOINT in
+   webflow-override.js. 992px is Webflow's own Desktop breakpoint.
+   ========================================================================== */
+
+/* --------------------------------------------------------------- 1. Tokens */
+
+.section-4 {
+  --cs-accent: #6e4ae6;
+  --cs-accent-soft: #ede7fd;
+  --cs-bg: #f7f5fe;
+  --cs-text: #150a2e;
+  --cs-muted: #2c2440;
+  --cs-rule: #e2dcf5;
+  --cs-cta-bg: #000000;
+  --cs-cta-text: #ffffff;
+
+  --cs-max: 1360px;
+  --cs-pad: 40px;
+  --cs-radius: 20px;
+  --cs-col-gap: 80px;
+  --cs-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  display: block;
+  padding: 72px 0 96px;
+  background: var(--cs-bg);
+  color: var(--cs-text);
+}
+
+/* One container width for both lists. Webflow's Collection List Wrapper
+   (.w-dyn-list) is left as a plain block — the flexing happens on the
+   .w-dyn-items inside it. */
+.section-4 .tab-nav,
+.section-4 .tab-body {
+  max-width: var(--cs-max);
+  margin: 0 auto;
+  padding: 0 var(--cs-pad);
+}
+
+.section-4 .w-dyn-list {
+  display: block;
+}
+
+/* ------------------------------------------------- 2. Trigger (logo) shell */
+
+/* .tab-btn lives in .tab-nav on desktop and inside .tab-body's collection
+   item on mobile, so the shared styles sit here and each mode adds its own. */
+.section-4 .tab-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  /* Neutralises `.tab-btn { opacity: .5 }` from the original inline <style>,
+     which would otherwise compound with the image opacity below and render
+     inactive logos at 0.25. Dimming belongs on the image, not the row, so the
+     mobile chevron stays legible. */
+  opacity: 1;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* The original inline <style> loads AFTER this file and its
+   `.tab-btn.is-active` rule ties on specificity, so these two declarations
+   are re-stated one class higher to win regardless of order. The underline is
+   drawn with ::after below — a real border-bottom would also shift the logo
+   up by 3px whenever a tab became active. */
+.section-4 .tab-btn.is-active {
+  opacity: 1;
+  border-bottom: 0;
+}
+
+.section-4 .tab-btn:focus-visible {
+  outline: 2px solid var(--cs-accent);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.section-4 .tab-btn img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: 30px;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.5;
+  transition: opacity 0.25s var(--cs-ease), filter 0.25s var(--cs-ease);
+}
+
+.section-4 .tab-btn:hover img {
+  opacity: 0.8;
+}
+
+.section-4 .tab-btn.is-active img,
+.section-4 .tab-btn.is-active:hover img {
+  filter: none;
+  opacity: 1;
+}
+
+/* The in-pane logo is redundant once the trigger carries it in both modes.
+   Delete this rule if you want the logo repeated above the quote. */
+.section-4 .brand-logo-image {
+  display: none;
+}
+
+/* --------------------------------------------------------- 3. Pane content */
+
+/* Their inline <style> sets `.tab-pane { display:none }` — this two-class
+   selector outranks it, so the pane is always laid out and we control
+   visibility with height (mobile) or display (desktop). */
+/* `.tab-pane.is-active` is restated here for the same load-order reason:
+   the inline <style> switches it to `display: grid`. The desktop block below
+   deliberately puts it back to grid at this same specificity. */
+.section-4 .tab-pane,
+.section-4 .tab-pane.is-active {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.section-4 .quote-container {
+  display: block;
+}
+
+/* Quote */
+.section-4 .quote-container p {
+  margin: 0 0 24px;
+  font-size: clamp(1.25rem, 1.05rem + 1vw, 1.75rem);
+  line-height: 1.34;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--cs-text);
+}
+
+/* Attribution */
+.section-4 .author-container {
+  display: block;
+}
+
+.section-4 .author-container h4 {
+  margin: 0 0 4px;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--cs-accent);
+}
+
+.section-4 .author-container p {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--cs-muted);
+}
+
+/* Metrics + CTA. The CTA is the 4th child of .metrics-grid, so it gets an
+   explicit full-width row rather than a 4th column. */
+.section-4 .metrics-section {
+  display: block;
+  margin-top: 28px;
+}
+
+.section-4 .metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+
+.section-4 .metric-item {
+  min-width: 0;
+}
+
+.section-4 .metric-item h3 {
+  margin: 0;
+  font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--cs-accent);
+}
+
+.section-4 .metric-item p {
+  margin: 8px 0 0;
+  font-size: 0.875rem;
+  line-height: 1.35;
+  color: var(--cs-muted);
+}
+
+.section-4 .button-main {
+  grid-column: 1 / -1;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+  padding: 16px 28px;
+  border-radius: 999px;
+  background: var(--cs-cta-bg);
+  color: var(--cs-cta-text);
+  text-decoration: none;
+  transition: transform 0.2s var(--cs-ease), opacity 0.2s var(--cs-ease);
+}
+
+.section-4 .button-main:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.section-4 .button-main:focus-visible {
+  outline: 2px solid var(--cs-accent);
+  outline-offset: 3px;
+}
+
+.section-4 .button-main .button-text {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--cs-cta-text);
+}
+
+.section-4 .button-main .arrow-white {
+  display: block;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+}
+
+/* Image */
+.section-4 .content-right {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--cs-radius);
+  background: linear-gradient(135deg, var(--cs-accent-soft), #dcd3fb);
+  aspect-ratio: 1 / 1;
+}
+
+.section-4 .content-right img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ------------------------------------------------------------- 4. Desktop */
+
+@media (min-width: 992px) {
+  /* ---- Tab strip ---- */
+  .section-4 .tab-nav .w-dyn-items {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    border-bottom: 1px solid var(--cs-rule);
+  }
+
+  .section-4 .tab-nav .w-dyn-item {
+    display: flex;
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .section-4 .tab-nav .tab-btn {
+    flex: 1 1 auto;
+    justify-content: center;
+    padding: 8px 12px 24px;
+  }
+
+  .section-4 .tab-nav .w-dyn-item:first-child .tab-btn {
+    justify-content: flex-start;
+    padding-left: 0;
+  }
+
+  .section-4 .tab-nav .w-dyn-item:last-child .tab-btn {
+    justify-content: flex-end;
+    padding-right: 0;
+  }
+
+  /* Active underline, sitting on top of the strip's own rule. Replaces the
+     `border-bottom` in the original inline <style>, which shifted the logo
+     by 3px whenever a tab became active. */
+  .section-4 .tab-nav .tab-btn::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: -1px;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--cs-accent);
+    transform: scaleX(0.4);
+    opacity: 0;
+    transition: transform 0.3s var(--cs-ease), opacity 0.3s var(--cs-ease);
+  }
+
+  .section-4 .tab-nav .w-dyn-item:first-child .tab-btn::after {
+    left: 0;
+  }
+
+  .section-4 .tab-nav .w-dyn-item:last-child .tab-btn::after {
+    right: 0;
+  }
+
+  .section-4 .tab-nav .tab-btn.is-active::after {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+
+  /* ---- Panes: one visible, two columns ---- */
+  .section-4 .tab-body .w-dyn-item {
+    border-top: 0;
+  }
+
+  .section-4 .tab-pane {
+    display: none;
+    max-height: none;
+    overflow: visible;
+    visibility: visible;
+    transition: none;
+  }
+
+  /* The `:not([data-cs-ready])` half shows the first story before the JS
+     runs, so the section is never a logo strip over empty space. */
+  .section-4 .tab-pane.is-active,
+  .section-4 .tab-body .w-dyn-items:not([data-cs-ready]) > .w-dyn-item:first-child .tab-pane {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr);
+    /* `auto 1fr`, not `auto auto`: the image spans both rows, so with two
+       auto rows its height would inflate row 1 and push the stats down by a
+       different amount for every story. Sending the slack to row 2 keeps the
+       attribution-to-stats gap identical regardless of image height. */
+    grid-template-rows: auto 1fr;
+    column-gap: var(--cs-col-gap);
+    align-items: start;
+    padding-top: 64px;
+    animation: cs-panel-in 0.45s var(--cs-ease) both;
+  }
+
+  /* DOM order is content-left, content-right, metrics-section — so the image
+     is placed explicitly into column 2 across both rows. */
+  .section-4 .tab-pane > .content-left {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .section-4 .tab-pane > .metrics-section {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+  }
+
+  .section-4 .tab-pane > .content-right {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: start;
+    aspect-ratio: 1 / 1.02;
+  }
+
+  .section-4 .quote-container p {
+    margin-bottom: 32px;
+    font-size: clamp(1.5rem, 1.05rem + 0.85vw, 2rem);
+  }
+
+  .section-4 .metrics-section {
+    margin-top: 40px;
+  }
+
+  .section-4 .metrics-grid {
+    gap: 32px;
+    max-width: 620px;
+  }
+
+  .section-4 .button-main {
+    margin-top: 8px;
+  }
+}
+
+@keyframes cs-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* -------------------------------------------------------------- 5. Mobile */
+
+@media (max-width: 991px) {
+  .section-4 {
+    --cs-pad: 20px;
+  }
+
+  /* The strip is emptied by the JS (triggers move down next to their pane),
+     so it collapses to nothing. */
+  .section-4 .tab-nav {
+    display: none;
+  }
+
+  /* Each collection item in .tab-body becomes an accordion row. */
+  .section-4 .tab-body .w-dyn-item {
+    position: relative;
+    border-top: 1px solid var(--cs-rule);
+  }
+
+  .section-4 .tab-body .w-dyn-item:first-child {
+    border-top: 0;
+  }
+
+  /* Purple rule above the open row */
+  .section-4 .tab-body .w-dyn-item::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--cs-accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.3s var(--cs-ease);
+  }
+
+  .section-4 .tab-body .w-dyn-item.is-active::before {
+    transform: scaleX(1);
+  }
+
+  /* ---- Trigger as an accordion header ---- */
+  .section-4 .tab-body .tab-btn {
+    width: 100%;
+    padding: 22px 0;
+  }
+
+  .section-4 .tab-body .tab-btn img {
+    height: 26px;
+    object-position: left center;
+  }
+
+  /* CSS-only chevron — no extra element needed in the Designer.
+     ::after is the desktop underline, so the chevron uses ::before and is
+     pushed to the right end of the flex row with `order` + `margin-left`. */
+  .section-4 .tab-body .tab-btn::before {
+    content: "";
+    order: 1;
+    flex: 0 0 auto;
+    width: 9px;
+    height: 9px;
+    margin-left: auto;
+    margin-right: 3px;
+    border-right: 2px solid #6d6a86;
+    border-bottom: 2px solid #6d6a86;
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform 0.3s var(--cs-ease), border-color 0.25s var(--cs-ease);
+  }
+
+  .section-4 .tab-body .w-dyn-item.is-active .tab-btn::before {
+    transform: translateY(2px) rotate(225deg);
+    border-color: var(--cs-text);
+  }
+
+  /* ---- Collapsing pane ----
+     `visibility` keeps links and buttons inside a collapsed pane out of the
+     tab order; the delay holds it visible for the duration of the collapse. */
+  /* No padding here: padding is not collapsed by `max-height: 0`, so it
+     would leave every closed row a few pixels tall. Spacing goes on the
+     pane's children instead. */
+  .section-4 .tab-pane {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: max-height 0.45s var(--cs-ease), opacity 0.3s var(--cs-ease),
+      visibility 0s linear 0.45s;
+  }
+
+  .section-4 .w-dyn-item.is-active > .tab-pane,
+  .section-4 .tab-body .w-dyn-items:not([data-cs-ready]) > .w-dyn-item:first-child .tab-pane {
+    max-height: none;
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  /* Mobile order: quote, attribution, stats, CTA, image. DOM order puts the
+     image second, so it is ordered last. */
+  .section-4 .tab-pane > .content-left {
+    order: 1;
+  }
+
+  .section-4 .tab-pane > .metrics-section {
+    order: 2;
+  }
+
+  .section-4 .tab-pane > .content-right {
+    order: 3;
+    margin-top: 28px;
+    margin-bottom: 36px;
+  }
+
+  .section-4 .metrics-grid {
+    gap: 14px;
+  }
+
+  .section-4 .metric-item p {
+    font-size: 0.8125rem;
+  }
+
+  .section-4 .button-main {
+    margin-top: 24px;
+    padding: 14px 24px;
+  }
+}
+
+/* ------------------------------------------------------- 6. Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .section-4 *,
+  .section-4 *::before,
+  .section-4 *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

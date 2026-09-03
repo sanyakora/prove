@@ -167,15 +167,21 @@
   transform: scaleX(1);
 }
 
+/* `visibility` keeps links and buttons inside a collapsed panel out of the
+   tab order; the delay holds the panel visible for the collapse animation. */
 .cs-panel {
   overflow: hidden;
   max-height: 0;
   opacity: 0;
-  transition: max-height 0.45s var(--cs-ease), opacity 0.3s var(--cs-ease);
+  visibility: hidden;
+  transition: max-height 0.45s var(--cs-ease), opacity 0.3s var(--cs-ease),
+    visibility 0s linear 0.45s;
 }
 
 .cs-item.is-active > .cs-panel {
   opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
 }
 
 .cs-panel-inner {
@@ -310,6 +316,8 @@
 .cs-list:not([data-cs-ready]) > .cs-item:first-child > .cs-panel {
   max-height: none;
   opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
 }
 
 /* --------------------------------------------------------------------------
@@ -403,6 +411,7 @@
     max-height: none;
     overflow: visible;
     opacity: 1;
+    visibility: visible;
     transition: none;
   }
 

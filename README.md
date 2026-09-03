@@ -12,6 +12,11 @@ mobile, driven by a single Webflow CMS Collection List.
 
 Open `index.html` in a browser and drag the window across 992px to see both modes.
 
+> **Already built this in Webflow with two Collection Lists?** See
+> [`webflow/`](webflow/README.md) — a CSS/JS override keyed to the existing `.tab-nav` /
+> `.tab-body` / `.tab-pane` classes, which needs no structural changes in the Designer. The
+> files below are the from-scratch reference build.
+
 ---
 
 ## How it works (read this before building in Webflow)
